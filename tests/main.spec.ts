@@ -1,12 +1,15 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { MainPage } from '../pages/ui/MainPage';
+import { MainPage } from '../pages/ui/mainPage';
 import { linkData } from '../data/mainPageTestData';
 
 
 test.describe("Auto Ria main page test", () => {
     test.beforeEach ( async ({ page }) => {
-        await page.goto("https://auto.ria.com/uk/");
+        await page.goto("https://auto.ria.com/uk/", {
+            timeout: 10000,
+            waitUntil: "domcontentloaded"
+        });
     });
 
     test ("Check main page title", async ({ page }) => {
