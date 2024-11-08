@@ -13,8 +13,8 @@ test.describe("Auto Ria main page test", () => {
     });
 
     test ("Check main page title", async ({ page }) => {
-        const mainPAge = new MainPage(page);
-        const title = await mainPAge.checkTitle();
+        const mainPage = new MainPage(page);
+        const title = await mainPage.checkTitle();
         expect(title).toBe("AUTO.RIA™ — Автобазар №1, купити та продати перевірене авто легко!")
     })
 
