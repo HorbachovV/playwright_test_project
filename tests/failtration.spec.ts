@@ -10,11 +10,11 @@ test.describe("Filtration methods testing", () => {
         });
     });
     test("Select type", async ({ page }) => {
-        // const mainPageFiltration = new MainPageFiltration(page);
+        const mainPageFiltration = new MainPageFiltration(page);
 
-        // const select = mainPageFiltration.selectType("#categories", "Легкові");
-        // console.log(select)
-
-        await page.locator("#categories").click()
+        await mainPageFiltration.selectType("Тип транспорту", "6");
+        const selectedType = await mainPageFiltration.getSelectedType("Тип транспорту");
+        expect(selectedType).toBe("6")
     })
 })
+

@@ -12,6 +12,11 @@ export class MainPageFiltration {
     }
 
     async selectType (locator: string, value: string) {
-        await this.search.startSearch(locator, value)
+        await this.search.selectOption(locator, value)
+    }
+    
+    async getSelectedType (locator: string): Promise<string> {
+        const selectedOption = await this.page.getByLabel(locator).inputValue();
+        return selectedOption;
     }
 }

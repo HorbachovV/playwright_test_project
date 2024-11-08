@@ -7,7 +7,11 @@ export class Search {
         this.page = page;
     }
 
-    async startSearch (locator: string, value: string) {
-        await  this.page.locator(locator).selectOption({value: value});
+    async selectOption (locator: string, value: string) {
+        // await this.page.getByLabel(locator).selectOption(value);
+
+        const element = await this.page.getByLabel(locator);
+        await element.waitFor({state: "visible"});
+        await element.selectOption(value)
     }
 }
