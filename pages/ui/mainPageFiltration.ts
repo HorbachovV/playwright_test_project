@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { Search } from "../../components/searching";
 
 export class MainPageFiltration {

@@ -14,7 +14,14 @@ test.describe("Filtration methods testing", () => {
 
         await mainPageFiltration.selectType("Тип транспорту", "6");
         const selectedType = await mainPageFiltration.getSelectedType("Тип транспорту");
-        expect(selectedType).toBe("6")
+        expect(selectedType).toBe("6") 
+
+    })
+    test("Check all available type type", async ({ page }) => {
+        const dropDownList = page.locator("#categories > option");
+        await expect(dropDownList).toHaveText(["Будь-який", "Легкові", "Мото", "Вантажівки", "Причепи", "Спецтехніка", "Сільгосптехніка", "Автобуси", "Водний транспорт", "Повітряний транспорт", "Автобудинки"])
+        
+
     })
 })
 

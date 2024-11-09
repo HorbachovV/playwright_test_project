@@ -8,9 +8,7 @@ export class Search {
     }
 
     async selectOption (locator: string, value: string) {
-        // await this.page.getByLabel(locator).selectOption(value);
-
-        const element = await this.page.getByLabel(locator);
+        const element = this.page.getByLabel(locator);
         await element.waitFor({state: "visible"});
         await element.selectOption(value)
     }
