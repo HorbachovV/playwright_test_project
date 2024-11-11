@@ -24,5 +24,29 @@ test.describe("Filtration methods testing", () => {
         await mainPageFiltration.selectType("Тип транспорту", "Легкові");
         await expect(page.locator('#categories option[selected="selected"]')).toHaveText('Легкові');   
     })
+
+    test("Check searched brand", async ({ page }) => {
+        const brandInputId = "#brandTooltipBrandAutocompleteInput-brand";
+        const listLocator = '.item.bold';
+        const expectedBrand = "Toyota";
+
+        // const mainPageFiltration = new MainPageFiltration(page);
+
+        // await mainPageFiltration.getSearchedBrand("#brandTooltipBrandAutocompleteInput-brand", "Ford", "ul>li")
+        // const selectedBrand = page.inputValue("//input[@id='brandTooltipBrandAutocompleteInput-brand']");
+        // expect(selectedBrand).toBe("Ford")
+        // await page.locator("//input[@id='brandTooltipBrandAutocompleteInput-brand']").fill("Ford");
+
+
+        // await page.fill(brandInputId, expectedBrand);
+      
+        // await page.waitForSelector(`${listLocator} >> text=${expectedBrand}`, { state: 'visible' });
+        // page.locator(`${listLocator} >> text=${expectedBrand}`).click();
+
+        await page.fill("#brandTooltipBrandAutocompleteInput-brand", "Audi")
+        const select = await page.locator("#brandTooltipBrandAutocompleteInput-brand")
+        expect(select).toHaveText("sdgdfs")
+        // .unstyle.scrollbar.autocomplete-select.hide> ul>li >> text="Ford"
+    })
 })
 
