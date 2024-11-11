@@ -44,9 +44,14 @@ test.describe("Filtration methods testing", () => {
         // page.locator(`${listLocator} >> text=${expectedBrand}`).click();
 
         await page.fill("#brandTooltipBrandAutocompleteInput-brand", "Audi")
-        const select = await page.locator("#brandTooltipBrandAutocompleteInput-brand")
-        expect(select).toHaveText("sdgdfs")
-        // .unstyle.scrollbar.autocomplete-select.hide> ul>li >> text="Ford"
+        // const selected = page.locator("ul>li >> text='Audi'")
+        // page.waitForTimeout(10000)
+        await page.waitForSelector("ul>li >> text=Audi", {state: "visible"})
+        page.locator("ul>li >> text='Audi'").first().click()
+
+        // const select = page.locator("#brandTooltipBrandAutocompleteInput-brand")
+        // expect(select).toHaveText("sdgdfs")
+        // 
     })
 })
 
