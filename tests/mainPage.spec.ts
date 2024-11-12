@@ -14,7 +14,7 @@ test.describe("Testing main page", () => {
         expect(pageTitle).toBe("Нова пошта - доставка майбутнього");
     })
 
-    test.skip ("Verify links hover color", async ({ page }) => {
+    test ("Verify links hover color", async ({ page }) => {
 
         await page.hover("(//div[contains(text(),'Відправити')])[1]")
 
@@ -24,7 +24,7 @@ test.describe("Testing main page", () => {
         expect(linkColor).toBe("rgb(218, 41, 28)")
     })
     
-    test ("Verify links color", async ({ page }) => {
+    test.only ("Verify links color", async ({ page }) => {
 
         await page.locator("(//div[contains(text(),'Відправити')])[1]")
 
