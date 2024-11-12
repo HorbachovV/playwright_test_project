@@ -43,15 +43,30 @@ test.describe("Filtration methods testing", () => {
         // await page.waitForSelector(`${listLocator} >> text=${expectedBrand}`, { state: 'visible' });
         // page.locator(`${listLocator} >> text=${expectedBrand}`).click();
 
-        await page.fill("#brandTooltipBrandAutocompleteInput-brand", "Audi")
+        // await page.fill("#brandTooltipBrandAutocompleteInput-brand", "Audi")
         // const selected = page.locator("ul>li >> text='Audi'")
         // page.waitForTimeout(10000)
-        await page.waitForSelector("ul>li >> text=Audi", {state: "visible"})
-        page.locator("ul>li >> text='Audi'").first().click()
+        // await page.waitForSelector("ul>li >> text=Audi", {state: "visible"})
+        // page.locator("ul>li >> text='Audi'").first().click()
 
         // const select = page.locator("#brandTooltipBrandAutocompleteInput-brand")
         // expect(select).toHaveText("sdgdfs")
         // 
+
+        
+
+        // await page.locator("#src").fill("Delhi");
+        await page.fill("#brandTooltipBrandAutocompleteInput-brand", "Audi")
+        // await page.waitForSelector("ul>li >> text='Audi'");
+        const brandOption = await page.$$("text='Audi'");//scrollbar autocomplete-select
+        console.log(brandOption)
+
+        for (let option of brandOption) {
+
+            const value = await option.textContent();
+            console.log(value);
+    
+        }
     })
 })
 
