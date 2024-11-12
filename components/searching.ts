@@ -13,9 +13,4 @@ export class Search {
         await element.selectOption(value)
     }
 
-    async searchOption (searchInputLocator: string, listLocator: string, brandName: string) {
-        await this.page.fill(searchInputLocator, brandName);
-        await this.page.waitForSelector(`${listLocator} >> text=${brandName}`, { state: 'visible' });
-        this.page.locator(`${listLocator} >> text=${brandName}`).click();
-    }
 }

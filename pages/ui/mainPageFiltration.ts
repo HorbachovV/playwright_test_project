@@ -19,9 +19,4 @@ export class MainPageFiltration {
         const selectedOption = await this.page.getByLabel(locator).inputValue();
         return selectedOption;
     }
-
-    async getSearchedBrand (searchInputLocator: string, listLocator: string, brandName: string) {
-        const selectedBrand = await this.search.searchOption(searchInputLocator, brandName, listLocator);
-        return selectedBrand
-    }
 }
