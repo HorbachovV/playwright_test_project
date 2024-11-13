@@ -1,36 +1,29 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { MainPage } from '../pages/ui/mainPage';
 
 test.describe("Testing main page", () => {
 
     test.beforeEach ( async ({ page }) => {
-        
+        const mainPage = new MainPage(page);
         await page.goto("https://novaposhta.ua/", {
             timeout: 10000,
             waitUntil: "domcontentloaded"
         });
         await page.locator("img[alt='Новий сайт']").click()
-        const pageTitle = await page.title();
+        const pageTitle = await mainPage.checkTitle();
         expect(pageTitle).toBe("Нова пошта - доставка майбутнього");
     })
 
-    test ("Verify links hover color", async ({ page }) => {
-
-        await page.hover("(//div[contains(text(),'Відправити')])[1]")
-
-        const linkColor = await page.$eval("(//div[contains(text(),'Відправити')])[1]", (element: HTMLLinkElement) => {
-            return window.getComputedStyle(element).color
-        })
+    test.skip ("Verify links hover color", async ({ page }) => {
+        const mainPage = new MainPage(page);
+        const linkColor = await mainPage.checkColor(true, "//li[@class='nav-item font-second']//div[contains(text(),'Відправити')]")
         expect(linkColor).toBe("rgb(218, 41, 28)")
     })
     
-    test.only ("Verify links color", async ({ page }) => {
-
-        await page.locator("(//div[contains(text(),'Відправити')])[1]")
-
-        const linkColor = await page.$eval("(//div[contains(text(),'Відправити')])[1]", (element: HTMLLinkElement) => {
-            return window.getComputedStyle(element).color
-        })
+    test ("Verify links color", async ({ page }) => {
+        const mainPage = new MainPage(page);
+        const linkColor = await mainPage.checkColor(false, "(//div[contains(text(),'Відправити')])[1]")
         expect(linkColor).toBe("rgb(0, 0, 0)")
     })
 
