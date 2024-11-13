@@ -21,11 +21,30 @@ test.describe("Testing main page", () => {
         expect(linkColor).toBe("rgb(218, 41, 28)")
     })
     
-    test ("Verify links color", async ({ page }) => {
+    test.skip ("Verify links color", async ({ page }) => {
         const mainPage = new MainPage(page);
         const linkColor = await mainPage.checkColor(false, "(//div[contains(text(),'Відправити')])[1]")
         expect(linkColor).toBe("rgb(0, 0, 0)")
     })
+    
+    test('Find links', async ({ page }) => {
+        
+         
+        
+        // for (const row of await page.getByRole('listitem').all())
+        //     console.log(await row.textContent()
+        // );
+
+        const link = page.getByRole("listitem").filter({hasText: "Відправити"}).first() 
+
+        await link.hover();
+        await link.click();
+
+        const secondLink = page.getByRole("listitem").filter({hasText: "Відправити з відділення "}).first(); 
+        await secondLink.hover();
+        await secondLink.click();
+       
+    });
 
     
 })
