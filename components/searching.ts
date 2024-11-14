@@ -6,11 +6,14 @@ export class Search {
     constructor(page: Page) {
         this.page = page;
     }
-
-    async selectOption (locator: string, value: string) {
-        const element = this.page.getByLabel(locator);
-        await element.waitFor({state: "visible"});
-        await element.selectOption(value)
+    async listItem (selector, firstText: string, secondtText: string) {
+            const link = this.page.getByRole(selector).filter({hasText: firstText}).first() 
+            await link.hover();
+            await link.click();
+            const secondLink = this.page.getByRole(selector).filter({hasText: secondtText}).first(); 
+            await secondLink.hover();
+            await secondLink.click();
+        }
     }
 
-}
+        

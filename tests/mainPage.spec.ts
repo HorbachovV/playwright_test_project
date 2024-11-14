@@ -1,6 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { MainPage } from '../pages/ui/mainPage';
+import { MainPageSearch } from '../pages/ui/mainPageSearch';
 
 test.describe("Testing main page", () => {
 
@@ -15,36 +16,20 @@ test.describe("Testing main page", () => {
         expect(pageTitle).toBe("Нова пошта - доставка майбутнього");
     })
 
-    test.skip ("Verify links hover color", async ({ page }) => {
+    test ("Verify links hover color", async ({ page }) => {
         const mainPage = new MainPage(page);
         const linkColor = await mainPage.checkColor(true, "//li[@class='nav-item font-second']//div[contains(text(),'Відправити')]")
         expect(linkColor).toBe("rgb(218, 41, 28)")
     })
     
-    test.skip ("Verify links color", async ({ page }) => {
+    test ("Verify links color", async ({ page }) => {
         const mainPage = new MainPage(page);
         const linkColor = await mainPage.checkColor(false, "(//div[contains(text(),'Відправити')])[1]")
         expect(linkColor).toBe("rgb(0, 0, 0)")
     })
     
-    test('Find links', async ({ page }) => {
-        
-         
-        
-        // for (const row of await page.getByRole('listitem').all())
-        //     console.log(await row.textContent()
-        // );
-
-        const link = page.getByRole("listitem").filter({hasText: "Відправити"}).first() 
-
-        await link.hover();
-        await link.click();
-
-        const secondLink = page.getByRole("listitem").filter({hasText: "Відправити з відділення "}).first(); 
-        await secondLink.hover();
-        await secondLink.click();
-       
+    test.only ('Find links', async ({ page }) => {
+        const search = new MainPageSearch(page);
+        await search.findAndClickLink("listitem", "Відправити", "Відправити з відділення ")
     });
-
-    
 })
