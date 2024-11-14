@@ -15,20 +15,17 @@ test.describe("Testing main page", () => {
         const pageTitle = await mainPage.checkTitle();
         expect(pageTitle).toBe("Нова пошта - доставка майбутнього");
     })
-
     test ("Verify links hover color", async ({ page }) => {
         const mainPage = new MainPage(page);
         const linkColor = await mainPage.checkColor(true, "//li[@class='nav-item font-second']//div[contains(text(),'Відправити')]")
         expect(linkColor).toBe("rgb(218, 41, 28)")
     })
-    
     test ("Verify links color", async ({ page }) => {
         const mainPage = new MainPage(page);
         const linkColor = await mainPage.checkColor(false, "(//div[contains(text(),'Відправити')])[1]")
         expect(linkColor).toBe("rgb(0, 0, 0)")
     })
-    
-    test.only ('Find links', async ({ page }) => {
+    test ('Find links', async ({ page }) => {
         const search = new MainPageSearch(page);
         await search.findAndClickLink("listitem", "Відправити", "Відправити з відділення ")
     });
