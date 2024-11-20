@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { Search } from "../../components/searching";
+import { Search } from "../../components/ui/searching"
 
 export class MainPageSearch {
     readonly page: Page;

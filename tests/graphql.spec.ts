@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { GraphQLApiTesting } from '../pages/api/graphqlpage';
 
 test.describe("GraphQL API testing", () => {
     test("Fetch all films and verify response", async ({ request }) => {
