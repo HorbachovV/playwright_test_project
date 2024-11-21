@@ -19,7 +19,7 @@ test.describe('GraphQL Tests using compnent', () => {
       )
       	expect(user.name).toBe("James Bond");
       	expect(user.gender).toBe("male");
-     	expect(user.status).toBe("active");
-
+     	  expect(user.status).toBe("active");
+		
     });
 });

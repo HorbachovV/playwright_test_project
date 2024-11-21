@@ -11,11 +11,3 @@ export const ADD_USER_MUTATION = `
     }
   }
 `;
-
-export const DELETE_USER_MUTATION = `
-  mutation DeleteUser($id: ID!) {
-    deleteUser(id: $id) {
-      id
-    }
-  }
-`;

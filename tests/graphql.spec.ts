@@ -26,9 +26,6 @@ test.describe("GraphQL API testing", () => {
         }`;
 
         const response = await request.post(graphqlEndpoint, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
             data: {
                 query: query,
             },
