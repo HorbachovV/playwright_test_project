@@ -3,27 +3,40 @@ import { APIRequestContext } from "playwright/test";
 
 export class GraphQLClient {
     private readonly request: APIRequestContext;
-
-    constructor (request: APIRequestContext) {
-        this.request = request
+    private readonly baseUrl: string;
+    private readonly authToken?: string;
+  
+    constructor(request: APIRequestContext, baseUrl: string, authToken?: string) {
+      this.request = request;
+      this.baseUrl = baseUrl;
+      this.authToken = authToken;
     }
-
-    async sendQuery (query: string, variables: Record<string, unknown> ={}) {
-        const response = await this.request.post("https://gorest.co.in/public/v2/graphql", {
-            headers: {
-                Authorization: "Bearer 60af87747e81d4ebdfcff9e7664127165c2dac89be65209be8fcc52c9b6e344c"
-            },
-            data: {
-                query,
-                variables
-            },
-        });
-
-        if (!response.ok()) {
-            throw new Error("GraphQL request failed: ${response.status()} ${await response.text()}`")
-        }
-
-        const result = await response.json();
-        return result
+  
+    async sendQuery(query: string, variables?: Record<string, any>) {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+  
+      if (this.authToken) {
+        headers.Authorization = `Bearer ${this.authToken}`;
+      }
+  
+      const response = await this.request.post(this.baseUrl, {
+        headers,
+        data: {
+          query,
+          variables,
+        },
+      });
+  
+      const responseBody = await response.json();
+  
+      if (response.status() !== 200 || responseBody.errors) {
+        throw new Error(
+          `GraphQL Error: ${JSON.stringify(responseBody.errors, null, 2)}`
+        );
+      }
+  
+      return responseBody;
     }
-}
+  }

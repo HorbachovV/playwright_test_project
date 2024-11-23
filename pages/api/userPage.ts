@@ -9,8 +9,12 @@ export class UserPage {
     }
 
     async addUser (name: string, gender: string, email: string, status: string) {
-        const variables = { name, gender, email, status};
-        const response = await this.client.sendQuery(ADD_USER_MUTATION, variables);
-        return response.data.createUser.user
+        const response = await this.client.sendQuery(ADD_USER_MUTATION, {
+            name,
+            gender,
+            email,
+            status
+        });
+        return response;
     }
 }
