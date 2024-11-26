@@ -16,6 +16,7 @@ test.describe("Testing main page", () => {
 	test("Find branch (City)", async ({ page }) => {
 		await page.locator("//div[@id='searchModule']//div[3]//a[1]").click();
 		//Need to handle popups with geolocation permission
+		//don't work with selected geolocation in config need to update
 		await page
 			.locator(
 				"//button[@class='icon-button !bg-gray-100 rounded-full p-1']"
