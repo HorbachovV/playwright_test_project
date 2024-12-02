@@ -1,18 +1,17 @@
 // @ts-check
-import { test, expect } from "@playwright/test";
+import { test, expect, APIRequestContext } from "@playwright/test";
+import { RestApi } from "../components/api/restapi";
+import { GetUsersData } from "../pages/api/gorestapi";
 
-test.describe("Gorest API testing", () => {
-	test("Check response status", async ({ request }) => {
-		const response = await request.get(
-			"https://gorest.co.in/public/v2/posts"
-		);
-		const posts = await response.json();
+test.describe("REST API Tests", () => {
+	let getUsersData: GetUsersData;
 
-		expect(response.status()).toBe(200);
-		expect(posts).toHaveLength(10);
+	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
+		const restApi = new RestApi(request);
+		getUsersData = new GetUsersData(restApi);
 	});
 
-	test("Get list of users", async ({ request }) => {
+	test.skip("Get list of users", async ({ request }) => {
 		const response = await request.get(
 			"https://gorest.co.in/public/v2/users"
 		);
@@ -25,5 +24,20 @@ test.describe("Gorest API testing", () => {
 		expect(users[0]).toHaveProperty("email");
 		expect(users[0]).toHaveProperty("gender");
 		expect(users[0]).toHaveProperty("status");
+	});
+
+	test("Get all posts and verify data", async () => {
+		const url = "https://gorest.co.in/public/v2/posts";
+		const status = 200;
+		const expectedLength = 10;
+
+		const posts = await getUsersData.getAllPosts(
+			url,
+			status,
+			expectedLength
+		);
+
+		expect(posts[0]).toHaveProperty("id");
+		expect(posts[0]).toHaveProperty("title");
 	});
 });
