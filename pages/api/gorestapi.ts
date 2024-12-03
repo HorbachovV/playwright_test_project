@@ -8,11 +8,7 @@ export class GetUsersData {
 		this.client = client;
 	}
 
-	async getAllPosts(
-		url: string,
-		expectedStatus: number,
-		expectedLength: number
-	) {
+	async getData(url: string, expectedStatus: number, expectedLength: number) {
 		const response = await this.client.getApi(url);
 
 		const data = await response.json();

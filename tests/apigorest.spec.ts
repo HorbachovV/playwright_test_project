@@ -11,14 +11,12 @@ test.describe("REST API Tests", () => {
 		getUsersData = new GetUsersData(restApi);
 	});
 
-	test.skip("Get list of users", async ({ request }) => {
-		const response = await request.get(
-			"https://gorest.co.in/public/v2/users"
-		);
-		const users = await response.json();
+	test("Get list of users", async () => {
+		const url = "https://gorest.co.in/public/v2/users";
+		const status = 200;
+		const expectedLength = 10;
 
-		expect(response.status()).toBe(200);
-		expect(users).toHaveLength(10);
+		const users = await getUsersData.getData(url, status, expectedLength);
 		expect(users[0]).toHaveProperty("id");
 		expect(users[0]).toHaveProperty("name");
 		expect(users[0]).toHaveProperty("email");
@@ -31,11 +29,7 @@ test.describe("REST API Tests", () => {
 		const status = 200;
 		const expectedLength = 10;
 
-		const posts = await getUsersData.getAllPosts(
-			url,
-			status,
-			expectedLength
-		);
+		const posts = await getUsersData.getData(url, status, expectedLength);
 
 		expect(posts[0]).toHaveProperty("id");
 		expect(posts[0]).toHaveProperty("title");
