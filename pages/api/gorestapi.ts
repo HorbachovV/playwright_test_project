@@ -19,3 +19,21 @@ export class GetUsersData {
 		return data;
 	}
 }
+
+export class CreateUser {
+	private readonly client: RestApi;
+
+	constructor(client: RestApi) {
+		this.client = client;
+	}
+
+	async createUser(url: string, userData: object, expectedStatus: number) {
+		const response = await this.client.postApi(url, userData);
+
+		const result = await response.json();
+		expect(response.ok()).toBeTruthy();
+		expect(response.status()).toBe(expectedStatus);
+		expect(result).toHaveProperty("id");
+		return result;
+	}
+}

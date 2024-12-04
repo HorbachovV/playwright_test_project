@@ -1,13 +1,25 @@
 export class RestApi {
 	private readonly request;
+	private readonly token: string;
 
-	constructor(request) {
+	constructor(request, token: string) {
 		this.request = request;
+		this.token = token;
 	}
 
 	async getApi(endpoint: string) {
 		const response = await this.request.get(endpoint);
 		return this.handleResponse(response);
+	}
+
+	async postApi(endpoint: string, data: object) {
+		return await this.request.post(endpoint, {
+			headers: {
+				Authorization: `Bearer ${this.token}`,
+				"Content-Type": "application/json",
+			},
+			data,
+		});
 	}
 
 	private async handleResponse(response) {

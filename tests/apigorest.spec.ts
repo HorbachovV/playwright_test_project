@@ -1,14 +1,18 @@
 // @ts-check
 import { test, expect, APIRequestContext } from "@playwright/test";
 import { RestApi } from "../components/api/restapi";
-import { GetUsersData } from "../pages/api/gorestapi";
+import { GetUsersData, CreateUser } from "../pages/api/gorestapi";
 
 test.describe("REST API Tests", () => {
 	let getUsersData: GetUsersData;
+	let createUser: CreateUser;
 
 	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
-		const restApi = new RestApi(request);
+		const token =
+			"60af87747e81d4ebdfcff9e7664127165c2dac89be65209be8fcc52c9b6e344c";
+		const restApi = new RestApi(request, token);
 		getUsersData = new GetUsersData(restApi);
+		createUser = new CreateUser(restApi);
 	});
 
 	test("Get list of users", async () => {
@@ -22,6 +26,7 @@ test.describe("REST API Tests", () => {
 		expect(users[0]).toHaveProperty("email");
 		expect(users[0]).toHaveProperty("gender");
 		expect(users[0]).toHaveProperty("status");
+		console.log(users);
 	});
 
 	test("Get all posts and verify data", async () => {
@@ -33,5 +38,24 @@ test.describe("REST API Tests", () => {
 
 		expect(posts[0]).toHaveProperty("id");
 		expect(posts[0]).toHaveProperty("title");
+	});
+
+	test("Create user and verify data", async () => {
+		const user = {
+			name: "John Smith",
+			email: `josmitt${Date.now()}y@mail.test`,
+			gender: "male",
+			status: "active",
+		};
+		const url = "https://gorest.co.in/public/v2/users";
+		const expectedStatus = 201;
+
+		const createdUSer = await createUser.createUser(
+			url,
+			user,
+			expectedStatus
+		);
+
+		console.log("New user created:", createdUSer);
 	});
 });
