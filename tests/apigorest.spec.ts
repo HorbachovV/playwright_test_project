@@ -56,6 +56,10 @@ test.describe("REST API Tests", () => {
 			expectedStatus
 		);
 
-		console.log("New user created:", createdUSer);
+		expect(createdUSer).toHaveProperty("id");
+		expect(createdUSer).toHaveProperty("name");
+		expect(createdUSer).toHaveProperty("email");
+		expect(createdUSer).toHaveProperty("gender");
+		expect(createdUSer).toHaveProperty("status");
 	});
 });
