@@ -6,6 +6,7 @@ import { GetUsersData, CreateUser } from "../pages/api/gorestapi";
 test.describe("REST API Tests", () => {
 	let getUsersData: GetUsersData;
 	let createUser: CreateUser;
+	let createdUSer;
 
 	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
 		const token =
@@ -26,7 +27,6 @@ test.describe("REST API Tests", () => {
 		expect(users[0]).toHaveProperty("email");
 		expect(users[0]).toHaveProperty("gender");
 		expect(users[0]).toHaveProperty("status");
-		console.log(users);
 	});
 
 	test("Get all posts and verify data", async () => {
@@ -50,16 +50,20 @@ test.describe("REST API Tests", () => {
 		const url = "https://gorest.co.in/public/v2/users";
 		const expectedStatus = 201;
 
-		const createdUSer = await createUser.createUser(
-			url,
-			user,
-			expectedStatus
-		);
+		createdUSer = await createUser.createUser(url, user, expectedStatus);
 
 		expect(createdUSer).toHaveProperty("id");
 		expect(createdUSer).toHaveProperty("name");
 		expect(createdUSer).toHaveProperty("email");
 		expect(createdUSer).toHaveProperty("gender");
 		expect(createdUSer).toHaveProperty("status");
+	});
+
+	test("Delete created user", async ({ request }) => {
+		const userId = createdUSer.id;
+		const response = await request.delete(
+			`https://gorest.co.in/public/v2/users/${userId}`
+		);
+		expect(response.status()).toBe(404);
 	});
 });
