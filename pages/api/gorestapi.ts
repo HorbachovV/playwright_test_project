@@ -37,3 +37,27 @@ export class CreateUser {
 		return result;
 	}
 }
+
+export class UpdateUserData {
+	private readonly client: RestApi;
+
+	constructor(client: RestApi) {
+		this.client = client;
+	}
+
+	async updateUser(
+		url: string,
+		userId: number,
+		data: object,
+		expectedStatus: number
+	) {
+		const response = await this.client.putApi(`${url}/${userId}`, data);
+		const updatedUser = await response.json();
+
+		expect(response.ok()).toBeTruthy();
+		expect(response.status()).toBe(expectedStatus);
+		//   expect(updatedUser).toMatchObject(data);
+
+		return updatedUser;
+	}
+}

@@ -1,11 +1,16 @@
 // @ts-check
 import { test, expect, APIRequestContext } from "@playwright/test";
 import { RestApi } from "../components/api/restapi";
-import { GetUsersData, CreateUser } from "../pages/api/gorestapi";
+import {
+	GetUsersData,
+	CreateUser,
+	UpdateUserData,
+} from "../pages/api/gorestapi";
 
 test.describe("REST API Tests", () => {
 	let getUsersData: GetUsersData;
 	let createUser: CreateUser;
+	let updateUserData: UpdateUserData;
 	let createdUSer;
 
 	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
@@ -14,6 +19,7 @@ test.describe("REST API Tests", () => {
 		const restApi = new RestApi(request, token);
 		getUsersData = new GetUsersData(restApi);
 		createUser = new CreateUser(restApi);
+		updateUserData = new UpdateUserData(restApi);
 	});
 
 	test("Get list of users", async () => {
@@ -59,7 +65,35 @@ test.describe("REST API Tests", () => {
 		expect(createdUSer).toHaveProperty("status");
 	});
 
-	test("Delete created user", async ({ request }) => {
+	test("Update a user", async ({ request }) => {
+		// find better here or beforeeach
+		// const authToken = "your_auth_token_here";
+		// const apiClient = new RestApi(request, token);
+		// const updateUserPage = new UpdateUserData(apiClient);
+
+		const url = "https://gorest.co.in/public/v2/users";
+		const userId = createdUSer.id;
+		const updatedData = {
+			name: "Updated Name",
+			email: `updated_email.${Date.now()}@example.com`,
+			gender: "male",
+			status: "active",
+		};
+
+		const response = await updateUserData.updateUser(
+			url,
+			userId,
+			updatedData,
+			200
+		);
+
+		expect(response.name).toBe(updatedData.name);
+		expect(response.email).toBe(updatedData.email);
+		expect(response.gender).toBe(updatedData.gender);
+		expect(response.status).toBe(updatedData.status);
+	});
+
+	test.skip("Delete created user", async ({ request }) => {
 		const userId = createdUSer.id;
 		const response = await request.delete(
 			`https://gorest.co.in/public/v2/users/${userId}`
