@@ -24,12 +24,21 @@ export class RestApi {
 
 	async putApi(endPoint: string, data: object) {
 		return await this.request.put(endPoint, {
-		  data,
-		  headers: this.token
-			? { Authorization: `Bearer ${this.token}` }
-			: {},
+			data,
+			headers: this.token
+				? { Authorization: `Bearer ${this.token}` }
+				: {},
 		});
-	  }
+	}
+
+	async patchApi(endPoint: string, data: object) {
+		return await this.request.patch(endPoint, {
+			data,
+			headers: this.token
+				? { Authorization: `Bearer ${this.token}` }
+				: {},
+		});
+	}
 
 	private async handleResponse(response) {
 		if (!response.ok()) {
