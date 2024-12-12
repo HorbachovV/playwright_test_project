@@ -6,6 +6,10 @@ import {
 	CreateUser,
 	UpdateUserData,
 } from "../pages/api/gorestapi";
+import { GOREST_DATA } from "../data/gorestData";
+
+const token = GOREST_DATA.token;
+const mainUrl = GOREST_DATA.url;
 
 test.describe("REST API Tests", () => {
 	let getUsersData: GetUsersData;
@@ -14,8 +18,6 @@ test.describe("REST API Tests", () => {
 	let createdUSer;
 
 	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
-		const token =
-			"60af87747e81d4ebdfcff9e7664127165c2dac89be65209be8fcc52c9b6e344c";
 		const restApi = new RestApi(request, token);
 		getUsersData = new GetUsersData(restApi);
 		createUser = new CreateUser(restApi);
@@ -23,7 +25,7 @@ test.describe("REST API Tests", () => {
 	});
 
 	test("Get list of users", async () => {
-		const url = "https://gorest.co.in/public/v2/users";
+		const url = `${mainUrl}users`;
 		const status = 200;
 		const expectedLength = 10;
 
@@ -36,7 +38,7 @@ test.describe("REST API Tests", () => {
 	});
 
 	test("Get all posts and verify data", async () => {
-		const url = "https://gorest.co.in/public/v2/posts";
+		const url = `${mainUrl}posts`;
 		const status = 200;
 		const expectedLength = 10;
 
@@ -53,7 +55,7 @@ test.describe("REST API Tests", () => {
 			gender: "male",
 			status: "active",
 		};
-		const url = "https://gorest.co.in/public/v2/users";
+		const url = `${mainUrl}users`;
 		const expectedStatus = 201;
 
 		createdUSer = await createUser.createUser(url, user, expectedStatus);
@@ -65,13 +67,8 @@ test.describe("REST API Tests", () => {
 		expect(createdUSer).toHaveProperty("status");
 	});
 
-	test("Update a user", async ({ request }) => {
-		// find better here or beforeeach
-		// const authToken = "your_auth_token_here";
-		// const apiClient = new RestApi(request, token);
-		// const updateUserPage = new UpdateUserData(apiClient);
-
-		const url = "https://gorest.co.in/public/v2/users";
+	test("Update a user", async () => {
+		const url = `${mainUrl}users`;
 		const userId = createdUSer.id;
 		const updatedData = {
 			name: "Updated Name",
@@ -93,11 +90,9 @@ test.describe("REST API Tests", () => {
 		expect(response.status).toBe(updatedData.status);
 	});
 
-	test.skip("Delete created user", async ({ request }) => {
+	test("Delete created user", async ({ request }) => {
 		const userId = createdUSer.id;
-		const response = await request.delete(
-			`https://gorest.co.in/public/v2/users/${userId}`
-		);
+		const response = await request.delete(`${mainUrl}users/${userId}`);
 		expect(response.status()).toBe(404);
 	});
 });
