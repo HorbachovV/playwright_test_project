@@ -92,7 +92,12 @@ test.describe("REST API Tests", () => {
 
 	test("Delete created user", async ({ request }) => {
 		const userId = createdUSer.id;
-		const response = await request.delete(`${mainUrl}users/${userId}`);
-		expect(response.status()).toBe(404);
+		const response = await request.delete(`${mainUrl}users/${userId}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+		});
+		expect(response.status()).toBe(204);
 	});
 });
