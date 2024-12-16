@@ -5,7 +5,7 @@ import {
 	GetUsersData,
 	CreateUser,
 	UpdateUserData,
-} from "../pages/api/gorestapi";
+} from "../pages/api/gorestapiuser";
 import { GOREST_DATA } from "../data/gorestData";
 
 const token = GOREST_DATA.token;
