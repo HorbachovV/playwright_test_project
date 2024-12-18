@@ -11,7 +11,7 @@ import { GOREST_DATA } from "../data/gorestData";
 const token = GOREST_DATA.token;
 const mainUrl = GOREST_DATA.url;
 
-test.describe("REST API Tests", () => {
+test.describe("REST API Tests: Users", () => {
 	let getUsersData: GetUsersData;
 	let createUser: CreateUser;
 	let updateUserData: UpdateUserData;
