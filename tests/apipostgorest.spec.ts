@@ -15,7 +15,7 @@ test.describe("REST API Tests: Posts", () => {
 		getUserPosts = new GetUserPosts(restApi);
 	});
 
-	test("Get list of users", async () => {
+	test("Get list of posts", async () => {
 		const url = `${mainUrl}posts`;
 		const status = 200;
 		const expectedLength = 10;
