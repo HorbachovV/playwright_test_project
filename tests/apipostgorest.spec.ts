@@ -22,4 +22,20 @@ test.describe("REST API Tests: Posts", () => {
 
 		await getUserPosts.getData(url, status, expectedLength);
 	});
+
+	test("Get list of comments", async () => {
+		const url = `${mainUrl}comments`;
+		const status = 200;
+		const expectedLength = 10;
+
+		await getUserPosts.getData(url, status, expectedLength);
+	});
+
+	test("Get list of todos", async () => {
+		const url = `${mainUrl}todos`;
+		const status = 200;
+		const expectedLength = 10;
+
+		await getUserPosts.getData(url, status, expectedLength);
+	});
 });
