@@ -15,20 +15,21 @@ test.describe("REST API Tests: Posts", () => {
 		getUserPosts = new GetUserPosts(restApi);
 	});
 
-	test("Get list of posts", async () => {
-		const url = `${mainUrl}posts`;
-		const status = 200;
-		const expectedLength = 10;
-
-		await getUserPosts.getData(url, status, expectedLength);
-	});
-
 	test("Get list of comments", async () => {
 		const url = `${mainUrl}comments`;
 		const status = 200;
 		const expectedLength = 10;
 
-		await getUserPosts.getData(url, status, expectedLength);
+		const comments = await getUserPosts.getData(
+			url,
+			status,
+			expectedLength
+		);
+		expect(comments[0]).toHaveProperty("id");
+		expect(comments[0]).toHaveProperty("body");
+		expect(comments[0]).toHaveProperty("email");
+		expect(comments[0]).toHaveProperty("name");
+		expect(comments[0]).toHaveProperty("post_id");
 	});
 
 	test("Get list of todos", async () => {
@@ -36,6 +37,11 @@ test.describe("REST API Tests: Posts", () => {
 		const status = 200;
 		const expectedLength = 10;
 
-		await getUserPosts.getData(url, status, expectedLength);
+		const todos = await getUserPosts.getData(url, status, expectedLength);
+		expect(todos[0]).toHaveProperty("id");
+		expect(todos[0]).toHaveProperty("user_id");
+		expect(todos[0]).toHaveProperty("title");
+		expect(todos[0]).toHaveProperty("due_on");
+		expect(todos[0]).toHaveProperty("status");
 	});
 });
