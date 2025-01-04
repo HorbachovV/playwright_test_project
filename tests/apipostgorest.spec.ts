@@ -44,4 +44,16 @@ test.describe("REST API Tests: Posts", () => {
 		expect(todos[0]).toHaveProperty("due_on");
 		expect(todos[0]).toHaveProperty("status");
 	});
+
+	test("Get list of posts", async () => {
+		const url = `${mainUrl}posts`;
+		const status = 200;
+		const expectedLength = 10;
+
+		const posts = await getUserPosts.getData(url, status, expectedLength);
+		expect(posts[0]).toHaveProperty("id");
+		expect(posts[0]).toHaveProperty("user_id");
+		expect(posts[0]).toHaveProperty("title");
+		expect(posts[0]).toHaveProperty("body");
+	});
 });
