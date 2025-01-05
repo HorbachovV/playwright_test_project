@@ -19,3 +19,21 @@ export class GetUserPosts {
 		return data;
 	}
 }
+
+export class CreatePost {
+	private readonly client: RestApi;
+
+	constructor(client: RestApi) {
+		this.client = client;
+	}
+
+	async createPost(url: string, postData: object, expectedStatus: number) {
+		const response = await this.client.postApi(url, postData);
+
+		const result = await response.json();
+		expect(response.ok()).toBeTruthy();
+		expect(response.status()).toBe(expectedStatus);
+		expect(result).toHaveProperty("id");
+		return result;
+	}
+}

@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect, APIRequestContext } from "@playwright/test";
 import { RestApi } from "../components/api/restapi";
-import { GetUserPosts } from "../pages/api/gorestapipost";
+import { GetUserPosts, CreatePost } from "../pages/api/gorestapipost";
 import { GOREST_DATA } from "../data/gorestData";
 
 const token = GOREST_DATA.token;
@@ -9,10 +9,12 @@ const mainUrl = GOREST_DATA.url;
 
 test.describe("REST API Tests: Posts", () => {
 	let getUserPosts: GetUserPosts;
+	let createPost: CreatePost;
 
 	test.beforeEach(async ({ request }: { request: APIRequestContext }) => {
 		const restApi = new RestApi(request, token);
 		getUserPosts = new GetUserPosts(restApi);
+		createPost = new CreatePost(restApi);
 	});
 
 	test("Get list of comments", async () => {
@@ -55,5 +57,42 @@ test.describe("REST API Tests: Posts", () => {
 		expect(posts[0]).toHaveProperty("user_id");
 		expect(posts[0]).toHaveProperty("title");
 		expect(posts[0]).toHaveProperty("body");
+		console.log(posts[0]);
+	});
+
+	test("Create post and verify data", async ({ request }) => {
+		// 	const post = {
+		// 		id: 1,
+		// 		title: "Test Post",
+		// 		body: "Test Post Body",
+		// 	};
+		// 	const url = `${mainUrl}7618858/posts`;
+		// 	const expectedStatus = 201;
+
+		// 	const createdPost = await createPost.createPost(
+		// 		url,
+		// 		post,
+		// 		expectedStatus
+		// 	);
+		// 	expect(createdPost).toHaveProperty("id");
+		// 	expect(createdPost).toHaveProperty("user_id");
+		// 	expect(createdPost).toHaveProperty("title");
+		// 	expect(createdPost).toHaveProperty("body");
+
+		const posts = {
+			title: "api",
+			body: "api testing",
+		};
+		const url = "https://gorest.co.in/public/v2/users/7618858/posts";
+		const repsonse = await request.post(url, {
+			headers: {
+				Authorization: `Bearer 60af87747e81d4ebdfcff9e7664127165c2dac89be65209be8fcc52c9b6e344c`,
+				"Content-Type": "application/json",
+			},
+			data: posts,
+		});
+		console.log(repsonse.json());
+		expect(repsonse.status()).toBe(201);
+
 	});
 });
