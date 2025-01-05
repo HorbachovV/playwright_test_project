@@ -91,7 +91,8 @@ test.describe("REST API Tests: Posts", () => {
 			},
 			data: posts,
 		});
-		console.log(repsonse.json());
+		const post  = await repsonse.json();
+		console.log(post);
 		expect(repsonse.status()).toBe(201);
 
 	});
