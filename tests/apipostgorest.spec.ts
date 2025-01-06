@@ -60,40 +60,22 @@ test.describe("REST API Tests: Posts", () => {
 		console.log(posts[0]);
 	});
 
-	test("Create post and verify data", async ({ request }) => {
-		// 	const post = {
-		// 		id: 1,
-		// 		title: "Test Post",
-		// 		body: "Test Post Body",
-		// 	};
-		// 	const url = `${mainUrl}7618858/posts`;
-		// 	const expectedStatus = 201;
-
-		// 	const createdPost = await createPost.createPost(
-		// 		url,
-		// 		post,
-		// 		expectedStatus
-		// 	);
-		// 	expect(createdPost).toHaveProperty("id");
-		// 	expect(createdPost).toHaveProperty("user_id");
-		// 	expect(createdPost).toHaveProperty("title");
-		// 	expect(createdPost).toHaveProperty("body");
-
-		const posts = {
-			title: "api",
-			body: "api testing",
+	test("Create post and verify data", async () => {
+		const post = {
+			title: "Test Post",
+			body: "Test Post Body",
 		};
-		const url = "https://gorest.co.in/public/v2/users/7618858/posts";
-		const repsonse = await request.post(url, {
-			headers: {
-				Authorization: `Bearer 60af87747e81d4ebdfcff9e7664127165c2dac89be65209be8fcc52c9b6e344c`,
-				"Content-Type": "application/json",
-			},
-			data: posts,
-		});
-		const post  = await repsonse.json();
-		console.log(post);
-		expect(repsonse.status()).toBe(201);
+		const url = `${mainUrl}users/7618858/posts`;
+		const expectedStatus = 201;
 
+		const createdPost = await createPost.createPost(
+			url,
+			post,
+			expectedStatus
+		);
+		expect(createdPost).toHaveProperty("id");
+		expect(createdPost).toHaveProperty("user_id");
+		expect(createdPost).toHaveProperty("title");
+		expect(createdPost).toHaveProperty("body");
 	});
 });
